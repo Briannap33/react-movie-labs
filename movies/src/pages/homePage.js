@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MovieList from "../components/movieList";
 import Grid from "@mui/material/Grid2";
 import Header from '../components/headerMovieList';
-import FilterCard from "../components/filterMovieCard";
+import FilterCard from "../components/filterMoviesCard";
 
 const HomePage = (props) => {
   const [movies, setMovies] = useState([]);
