@@ -1,6 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import HomePage from "./pages/homePage";
+import img from './images/film-poster-placeholder.png';
+
 
 const sample = {
   adult: false,
