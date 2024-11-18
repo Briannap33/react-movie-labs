@@ -23,6 +23,8 @@ const chip = { margin: 0.5 };
 const MovieDetails = ({ movie }) => { 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const productionCountries = movie.production_countries || [];
+
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -58,6 +60,21 @@ const MovieDetails = ({ movie }) => {
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
+
+      {movie.production_countries?.length > 0 && (
+        <Paper component="ul" sx={{ ...root }}>
+          <li>
+            <Chip label="Production Countries" sx={{ ...chip }} color="primary" />
+          </li>
+          {movie.production_countries.map((country, index) => (
+            <li key={index}>
+              <Chip label={country.name} sx={{ ...chip }} />
+            </li>
+          ))}
+        </Paper>
+      )}
+
+
       <Fab
         color="secondary"
         variant="extended"
