@@ -24,6 +24,7 @@ const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const productionCountries = movie.production_countries || [];
+  const movieCredits = movie.credits || [];
 
   return (
     <>
@@ -62,7 +63,7 @@ const MovieDetails = ({ movie }) => {
       </Paper>
 
       {movie.production_countries?.length > 0 && (
-        <Paper component="ul" sx={{ ...root }}>
+        <><Paper component="ul" sx={{ ...root }}>
           <li>
             <Chip label="Production Countries" sx={{ ...chip }} color="primary" />
           </li>
@@ -72,6 +73,17 @@ const MovieDetails = ({ movie }) => {
             </li>
           ))}
         </Paper>
+        {/* Adding cast credits */}
+          <Paper component="ul" sx={{ ...root }}>
+            <li>
+              <Chip label="Cast" sx={{ ...chip }} color="primary" />
+            </li>
+            {movieCredits.cast.map((actor) => (
+              <li key={actor.id}>
+                <Chip label={actor.name} sx={{ ...chip }} color="secondary" />
+              </li>
+            ))}
+          </Paper></>
       )}
 
 
