@@ -8,23 +8,24 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
-import MovieReviews from "../movieReviews"
+import MovieReviews from "../movieReviews";
 
 const root = {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
+  display: "flex",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  listStyle: "none",
+  padding: 1.5,
+  margin: 0,
 };
 const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie }) => { 
+const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const productionCountries = movie.production_countries || [];
-  const movieCredits = movie.credits || [];
+  const movieCredits = movie.credits || { cast: [], crew: [] };
+
 
   return (
     <>
@@ -36,20 +37,18 @@ const MovieDetails = ({ movie }) => {
         {movie.overview}
       </Typography>
 
-      <Paper 
-        component="ul" 
-        sx={{...root}}
-      >
+      <Paper component="ul" sx={{ ...root }}>
         <li>
-          <Chip label="Genres" sx={{...chip}} color="primary" />
+          <Chip label="Genres" sx={{ ...chip }} color="primary" />
         </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
-            <Chip label={g.name} sx={{...chip}} />
+            <Chip label={g.name} sx={{ ...chip }} />
           </li>
         ))}
       </Paper>
-      <Paper component="ul" sx={{...root}}>
+
+      <Paper component="ul" sx={{ ...root }}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
           icon={<MonetizationIcon />}
@@ -62,39 +61,55 @@ const MovieDetails = ({ movie }) => {
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
 
-      {movie.production_countries?.length > 0 && (
-        <><Paper component="ul" sx={{ ...root }}>
+      {productionCountries.length > 0 && (
+        <Paper component="ul" sx={{ ...root }}>
           <li>
             <Chip label="Production Countries" sx={{ ...chip }} color="primary" />
           </li>
-          {movie.production_countries.map((country, index) => (
+          {productionCountries.map((country, index) => (
             <li key={index}>
               <Chip label={country.name} sx={{ ...chip }} />
             </li>
           ))}
         </Paper>
-        {/* Adding cast credits */}
-          <Paper component="ul" sx={{ ...root }}>
-            <li>
-              <Chip label="Cast" sx={{ ...chip }} color="primary" />
+      )}
+      {/* Adding cast credits */}
+      {movieCredits && movieCredits.cast && movieCredits.cast.length > 0 && (
+        <Paper component="ul" sx={{ ...root }}>
+          <li>
+            <Chip label="Cast" sx={{ ...chip }} color="primary" />
+          </li>
+          {movieCredits.cast.map((actor) => (
+            <li key={actor.id || actor.name}> 
+              <Chip label={`${actor.name} - ${actor.character}`} sx={{ ...chip }} />
             </li>
-            {movieCredits.cast.map((actor) => (
-              <li key={actor.id}>
-                <Chip label={actor.name} sx={{ ...chip }} color="secondary" />
-              </li>
-            ))}
-          </Paper></>
+          ))}
+        </Paper>
+      )}
+
+      {/* Adding crew credits */}
+      {movieCredits && movieCredits.crew && movieCredits.crew.length > 0 && (
+        <Paper component="ul" sx={{ ...root }}>
+          <li>
+            <Chip label="Crew" sx={{ ...chip }} color="primary" />
+          </li>
+          {movieCredits.crew.map((crewMem) => (
+            <li key={crewMem.id || crewMem.name}> 
+              <Chip label={`${crewMem.name} - ${crewMem.job}`} sx={{ ...chip }} />
+            </li>
+          ))}
+        </Paper>
       )}
 
 
       <Fab
         color="secondary"
         variant="extended"
-        onClick={() =>setDrawerOpen(true)}
+        onClick={() => setDrawerOpen(true)}
         sx={{
-          position: 'fixed',
-          bottom: '1em',
-          right: '1em'
+          position: "fixed",
+          bottom: "1em",
+          right: "1em",
         }}
       >
         <NavigationIcon />
@@ -103,7 +118,8 @@ const MovieDetails = ({ movie }) => {
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
-      </>
+    </>
   );
 };
-export default MovieDetails ;
+
+export default MovieDetails;
