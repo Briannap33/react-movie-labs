@@ -46,7 +46,8 @@ const MoviesContextProvider = (props) => {
     ) )
   };
 
-  console.log("Must Watch Movies:", mustWatch)
+  console.log("Must Watch Movies:", mustWatch
+  )
   return (
     <MoviesContext.Provider
       value={{
