@@ -4,13 +4,13 @@ import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
-import RemoveFromMustWatch from "../components/cardIcons/removeFromFavorites";
+import RemoveFromWatchlistIcon from "../components/cardIcons/removeFromWatchList";
 
 const WatchlistPage = () => {
-  const {mustWatch : movieIds } = useContext(MoviesContext);
+  const { mustWatch, RemoveFromMustWatch } = useContext(MoviesContext);
 
   const watchlistMovieQueries = useQueries(
-    movieIds.map((movieId) => {
+    mustWatch.map((movieId) => {
       return {
         queryKey: ["movie", { id: movieId }],
         queryFn: getMovie,
@@ -37,7 +37,9 @@ const WatchlistPage = () => {
       action={(movie) => {
         return (
           <>
-            <RemoveFromMustWatch movie={movie} />
+            <RemoveFromWatchlistIcon
+             movie={movie}
+             onRemoveFromWatchlist={() => RemoveFromMustWatch(movie)} />
           </>
         );
       }}

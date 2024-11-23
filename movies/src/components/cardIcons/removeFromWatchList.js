@@ -4,11 +4,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { MoviesContext } from "../../contexts/moviesContext";
 
 const RemoveFromWatchlistIcon = ({ movie }) => {
-  const context = useContext(MoviesContext);
+  const { removeFromMustWatch }= useContext(MoviesContext);
 
   const handleRemoveFromWatchlist = (e) => {
     e.preventDefault();
-    context.removeFromMustWatch(movie);
+    removeFromMustWatch(movie);
   };
   return (
     <IconButton
