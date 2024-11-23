@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
-import { MoviesContext } from "../../contexts/moviesContext";
+import React from "react";
 import IconButton from "@mui/material/IconButton";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 
-const AddToWatchlistIcon = ({ movie }) => {
-  const context  = useContext(MoviesContext);
-
+const AddToWatchlistIcon = ({ movie, onAddToWatchList }) => {
   const handleAddToWatchlist = (e) => {
     e.preventDefault();
-    context.addToMustWatch(movie);
+    onAddToWatchList(movie);
   };
+
+
 
   return (
     <IconButton aria-label="add to watchlist" onClick={handleAddToWatchlist}>
