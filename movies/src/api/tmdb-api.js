@@ -121,5 +121,22 @@ export const getMovie = (args) => {
    });
   };
 
+  export const getMovieRecommendations  = ({ queryKey }) => {
+    const [, idPart] = queryKey;
+    const {movieId } = idPart;
+    return fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=YOUR_API_KEY`
+    ).then( (response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+   });
+  };
 
  

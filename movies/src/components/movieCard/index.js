@@ -64,13 +64,13 @@ export default function MovieCard({ movie, action }) {
           <Grid size={{xs: 6}}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+               {movie.vote_average}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      
+
       {action(movie)}
     
       <Link to={`/movies/${movie.id}`}>

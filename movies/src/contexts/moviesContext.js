@@ -30,24 +30,15 @@ const MoviesContextProvider = (props) => {
   //console.log(myReviews);
 
   const addToMustWatch = (movie) => {
-    let newWatch = [];
-    if (!mustWatch.includes(movie.id)){
-      newWatch = [...mustWatch, movie.id];
-    }
-    else{
-      newWatch = [...mustWatch];
-    }
-    setMustWatch(newWatch)
+    setMustWatch((prevState) => [...prevState, movie.id]);
   };
   
   const removeFromMustWatch = (movie) => {
-    setMustWatch( mustWatch.filter(
-      (m) => m !== movie.id
-    ) )
+    setMustWatch((prevState) => prevState.filter((id) => id !== movie.id));
+
   };
 
-  console.log("Must Watch Movies:", mustWatch
-  )
+  console.log("Must Watch Movies:", mustWatch)
   return (
     <MoviesContext.Provider
       value={{
