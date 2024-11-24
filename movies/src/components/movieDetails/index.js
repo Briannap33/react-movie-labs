@@ -75,11 +75,13 @@ const MovieDetails = ({ movie }) => {
         </Paper>
       )}
       {/* Adding cast credits */}
+      {/*checks if movie cres=dits and cast exist and have atleast 2 cast member*/}
       {movieCredits && movieCredits.cast && movieCredits.cast.length > 0 && (
         <Paper component="ul" sx={{ ...root }}>
           <li>
             <Chip label="Cast" sx={{ ...chip }} color="primary" />
           </li>
+          {/*loops through cast array and displays each actor*/}
           {movieCredits.cast.map((actor) => (
             <li key={actor.id || actor.name}> 
                 <Link to={`/person/${actor.id}`}>
@@ -96,6 +98,7 @@ const MovieDetails = ({ movie }) => {
           <li>
             <Chip label="Crew" sx={{ ...chip }} color="primary" />
           </li>
+              {/* Loop through the crew array and display each crew member */}
           {movieCredits.crew.map((crewMem) => (
             <li key={crewMem.id || crewMem.name}> 
               <Chip label={`${crewMem.name} - ${crewMem.job}`} sx={{ ...chip }} />
