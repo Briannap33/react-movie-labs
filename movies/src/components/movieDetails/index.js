@@ -9,6 +9,7 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
+import { Link } from "react-router-dom";
 
 const root = {
   display: "flex",
@@ -81,7 +82,9 @@ const MovieDetails = ({ movie }) => {
           </li>
           {movieCredits.cast.map((actor) => (
             <li key={actor.id || actor.name}> 
+                <Link to={`/person/${actor.id}`}>
               <Chip label={`${actor.name} - ${actor.character}`} sx={{ ...chip }} />
+              </Link>
             </li>
           ))}
         </Paper>
