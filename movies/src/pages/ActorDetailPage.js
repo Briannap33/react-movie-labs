@@ -18,6 +18,7 @@ const ActorPage = () => {
       getActorMovieCredits
     );
   
+
     if (isActorLoading || isCreditsLoading) {
       return <Spinner />;
     }
@@ -29,7 +30,7 @@ const ActorPage = () => {
     const renderActorDetails = () => (
         <>
           <h2>{actor.name}</h2>
-          {actor.biography ? <p>{actor.biography}</p> : <p>No biography available.</p>}
+          <p>{actor.biography || "No biography available."}</p>
           {actor.profile_path && (
             <img
               src={`https://image.tmdb.org/t/p/w185/${actor.profile_path}`}
@@ -45,7 +46,7 @@ const ActorPage = () => {
           <h3>Movies</h3>
           {movieCredits.cast && movieCredits.cast.length > 0 ? (
             movieCredits.cast.map((movie) => (
-              <Link to={`/movie/${movie.id}`} key={movie.id} style={{ textDecoration: "none" }}>
+              <Link to={`/movies/${movie.id}`} key={movie.id} >
                 <Chip label={movie.title} sx={{ margin: "0.5em" }} />
               </Link>
             ))
