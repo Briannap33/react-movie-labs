@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# Assignment 1 - ReactJS app.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Name: Brianna Power
 
-## Available Scripts
+## Overview.
 
-In the project directory, you can run:
+In this repository you will find the movies app, this contains a data base of movies, each category can be found in a different tab, users can add/remove to their favourites or add/remove to their watchlist based on what page they are currently viewing, users can filter through the movies or even search. when looking at a movies users can now find the actor, crew, production country, genre and more, the cast bubbles are clickable which will then lead the user to a page dedicated to the actors details, this also shows the movies which they have starred in which the user can click on to get more details
 
-### `npm start`
+### Features.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
++ Now Trending page (with pagination, movies are only for view, connot click in for more info)
++ Popular movies page
++ must watch list
++ snackbar when movie is added or removed from watch list
++ cast and crew credits for each movie
++ when a cast member is clicked, links to their own actor page
++ when a movie on actor page is clicked, the movie information comes up
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Setup requirements.
 
-### `npm test`
+@mui/icons-material
+@mui/material
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## API endpoints.
 
-### `npm run build`
++ Trending(day) list of movies - /trending/movie/day
++ lists off popular movies based on attention or being well known- /movie/popular
++ actor details(biography, image and other data)- /person/:id
++ retrieves the movies an actor has been in - /person/:id/movie_credits
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Routing.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
++ /person/:id- actorDetailPage
++ /trending - nowTrendingMovies
++ /popular - popularMoviesPage
++ /watchlist - watchListPage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Independent learning (If relevant).
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://mui.com/material-ui/api/
