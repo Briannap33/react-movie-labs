@@ -8,6 +8,7 @@ import Spinner from '../components/spinner';
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import Grid from "@mui/material/Grid2";
+import Paper from "@mui/material/Paper"
 
 const WatchlistPage = () => {
     const { mustWatch: movieIds } = useContext(MoviesContext);
@@ -18,14 +19,15 @@ const WatchlistPage = () => {
             queryFn: getMovie,
         })),
     );
+   
+     const recommendationsQueries = useQueries(
+       movieIds.map((movieId) => ({
+           queryKey: ['recommendations', { id: movieId }],
+           queryFn: () => getMovieRecommendations(movieId),
+  
+       }))
+   );
 
-const recommendationsQueries = useQueries(
-    movieIds.map((movieId) => ({
-        queryKey: ['recommendations', { id: movieId }],
-        queryFn: () => getMovieRecommendations(movieId),
-
-    }))
-);
 const isLoading = watchlistMovieQueries.find((m) => m.isLoading === true);
 const isRecommendationsLoading = recommendationsQueries.find((r) => r.isLoading === true);
 
@@ -33,46 +35,47 @@ if (isLoading || isRecommendationsLoading) {
     return <Spinner />;
 }
 
-const movies = watchlistMovieQueries.map((q, index) => {
-    return {
-        ...q.data,
-        recommendations: recommendationsQueries[index]?.data?.results || [],
-
-    }
-});
+const moviesWithRecommendations = watchlistMovieQueries
+.filter((query) => query.data) // Remove undefined movies
+.map((query, index) => ({
+  ...query.data,
+  recommendations: recommendationsQueries[index]?.data?.results || [],
+}));
 
 const toDo = () => true;
 
-    return (
-        <PageTemplate title="Watchlist"
-            movies={movies}
-            action={(movie) =>
-                <RemoveFromWatchlist movie={movie} />}>
-               <div style={{ marginTop: "20px" }}>
-        <Typography variant="h4" gutterBottom>
-          Recommended Movies
-        </Typography>
-        <Grid container spacing={2} style={{ marginTop: "20px" }}>
-          {movies.map((movie) =>
-            movie.recommendations.length > 0 ? (
-              <Grid item xs={12} sm={6} md={4} key={movie.id}>
-                <Typography variant="h6" gutterBottom>
-                  {movie.title}
-                </Typography>
-                <div style={{ display: "flex", overflowX: "auto" }}>
-                  {movie.recommendations.map((recommendedMovie) => (
-                    <div key={recommendedMovie.id} style={{ marginRight: "10px" }}>
-                      <MovieCard movie={recommendedMovie} />
-                    </div>
-                  ))}
-                </div>
+return (
+  <PageTemplate
+    title="Watchlist"
+    movies={moviesWithRecommendations}
+    action={(movie) => <RemoveFromWatchlist movie={movie} />}
+  >
+    <Grid container spacing={2} style={{ marginTop: "20px" }}>
+      {moviesWithRecommendations.map((movie) => (
+        <Grid item xs={12} sm={6} md={4} key={movie.id}>
+          {/* Movie Card */}
+          <MovieCard movie={movie} />
+
+          {/* Recommended Movies */}
+          {movie.recommendations.length > 0 && (
+            <Paper style={{ marginTop: "20px", padding: "10px" }}>
+              <Typography variant="h6" gutterBottom>
+                Recommended Movies
+              </Typography>
+              <Grid container spacing={2}>
+                {movie.recommendations.map((recommendedMovie) => (
+                  <Grid item xs={12} sm={6} md={4} key={recommendedMovie.id}>
+                    <MovieCard movie={recommendedMovie} />
+                  </Grid>
+                ))}
               </Grid>
-            ) : null
+            </Paper>
           )}
         </Grid>
-      </div>
-    </PageTemplate>
-  );
+      ))}
+    </Grid>
+  </PageTemplate>
+);
 };
 
 export default WatchlistPage;
