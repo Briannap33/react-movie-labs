@@ -8,13 +8,18 @@ import AddToWatchlistIcon from "../components/cardIcons/addToWatchList";
 import RemoveFromWatchlistIcon from "../components/cardIcons/removeFromWatchList";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-
+import ThumbsUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbsDownIcon from "@mui/icons-material/ThumbDown";
+import { Typography
+    
+ } from "@mui/material";
 const TrendingMoviePage = (props) => {
 
     const { data, error, isLoading, isError } = useQuery('trending', getTrendingMovies)
     const { addToMustWatch, removeFromMustWatch, mustWatch } = useContext(MoviesContext);
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+    const { rateMovie, ratings } = useContext(MoviesContext);
 
     const handleAddToWatchlist = (movie) => {
         addToMustWatch(movie);
@@ -32,6 +37,10 @@ const TrendingMoviePage = (props) => {
         setAlertOpen(false);
     };
 
+    const handleRateMovie = (movie, isThumbsUp) => {
+        rateMovie(movie, isThumbsUp);
+      };
+
     if (isLoading) {
         return <Spinner />;
     }
@@ -46,24 +55,40 @@ const TrendingMoviePage = (props) => {
     return (
         <>
             <PageTemplate
-                title="Trending Movies"
-                movies={movies}
-                action={(movie) => (
-                    <>
-                        {mustWatch.includes(movie.id) ? (
-                            <RemoveFromWatchlistIcon
-                                movie={movie}
-                                onRemoveFromWatchlist={handleRemoveFromWatchlist}
-                            />
-                        ) : (
-                            <AddToWatchlistIcon
-                                movie={movie}
-                                onAddToWatchList={handleAddToWatchlist}
-                            />
-                        )}
-                    </>
-                )}
-            />
+  title="Trending Movies"
+  movies={movies}
+  action={(movie) => (
+    <>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        {mustWatch.includes(movie.id) ? (
+          <RemoveFromWatchlistIcon
+            movie={movie}
+            onRemoveFromWatchlist={handleRemoveFromWatchlist}
+          />
+        ) : (
+          <AddToWatchlistIcon
+            movie={movie}
+            onAddToWatchList={handleAddToWatchlist}
+          />
+        )}
+        <ThumbsUpIcon
+          color={ratings[movie.id] === "thumbs-up" ? "primary" : "disabled"}
+          onClick={() => handleRateMovie(movie, true)}
+        />
+        <ThumbsDownIcon
+          color={ratings[movie.id] === "thumbs-down" ? "error" : "disabled"}
+          onClick={() => handleRateMovie(movie, false)}
+        />
+     </div>
+      {ratings[movie.id] && (
+        <Typography variant="body2">
+          Your Rating: {ratings[movie.id] === "thumbs-up" ? "👍" : "👎"}
+        </Typography>
+      )}
+    </>
+  )}
+/>
+
             <Snackbar
                 open={alertOpen}
                 autoHideDuration={3000}
