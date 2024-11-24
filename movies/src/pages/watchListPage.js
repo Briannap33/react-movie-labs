@@ -36,7 +36,7 @@ if (isLoading || isRecommendationsLoading) {
 }
 
 const moviesWithRecommendations = watchlistMovieQueries
-.filter((query) => query.data) // Remove undefined movies
+.filter((query) => query.data) 
 .map((query, index) => ({
   ...query.data,
   recommendations: recommendationsQueries[index]?.data?.results || [],

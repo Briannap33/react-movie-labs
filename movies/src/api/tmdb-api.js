@@ -48,10 +48,9 @@ export const getMovie = (args) => {
  });
 };
 
-export const getTrendingMovies = () => {
+export const getTrendingMovies = (timeWindow = "day") => {
   return fetch(
-    `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
-  ).then((response) => {
+'https://api.themoviedb.org/3/trending/movie/day?language=en-US'  ).then((response) => {
     if (!response.ok) {
       return response.json().then((error) => {
         throw new Error(error.status_message || "Something went wrong");
